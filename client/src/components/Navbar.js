@@ -9,7 +9,9 @@ function Navbar() {
         <div className="container">
           <div className="logo-container">
             <a href="/" className="logo">
-              {/* Logo */}
+              <div className="logo-img">
+                <p>Hidden text</p>
+              </div>
               <p className="logo-text">Stack <span className="bold">Overflow</span></p>
             </a>
             <a href="https://stackoverflow.com/company" className="nav-links">About</a>
