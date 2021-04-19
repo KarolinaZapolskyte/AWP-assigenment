@@ -14,7 +14,7 @@ The app is fully deployable to any PaaS like Heroku or AWS Elastic Beanstalk tha
 ## Commands
 The package.json provides all the commands needed to test and run this application.
 - **npm install** install all dependencies for the server and the client.
-- **npm run build** builds the static files for the React app.
+- **npm run build** builds the static files for the React app (run each time, when App.js gets updated).
 - **npm start** starts the complete MERN app.
 - **npm run react-dev** starts the React app in development mode on http://localhost:3000. Only works if the server is started separately. 
 
