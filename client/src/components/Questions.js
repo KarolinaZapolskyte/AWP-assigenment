@@ -1,10 +1,15 @@
 import { Link } from "@reach/router";
+import AskQuestion from "./AskQuestion";
 
 function Questions(props) {
-  const { data } = props;
+  const { data, addQuestion } = props;
 
   return (
     <>
+      <div className="ask-question">
+        <AskQuestion addQuestion={addQuestion}/>
+      </div>
+      
       <h1>All questions</h1>
       <div>
         {
@@ -13,6 +18,7 @@ function Questions(props) {
           </div> )
         }
       </div>
+
     </>
   );
 }

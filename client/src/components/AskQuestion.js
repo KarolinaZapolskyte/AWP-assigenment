@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 function AskQuestion(props) {
-  const { askQuestion } = props;
+  const { addQuestion } = props;
 
   const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [desc, setDesc] = useState("");
   const [tags, setTags] = useState("");
 
   // Conditional rendering
@@ -18,7 +18,7 @@ function AskQuestion(props) {
               <input onChange={(event) => setTitle(event.target.value)} type="text" />
               <br />
               <label>Message</label>
-              <textarea onChange={(event) => setBody(event.target.value)} type="text" />
+              <textarea onChange={(event) => setDesc(event.target.value)} type="text" />
               <br />
               <label>Tags</label>
               <input onChange={(event) => setTags(event.target.value)} />
@@ -26,8 +26,10 @@ function AskQuestion(props) {
             <br />
             <button type="button" className="blue" onClick={(event) => {
               const ingArray = tags.split(" ");
-              askQuestion(title, body, ingArray);
-            }}>Post Your Question
+              addQuestion(title, desc, ingArray);
+              document.getElementsByClassName('ask-question')[0].style.display="none";
+              window.location.reload();
+              }}>Post Your Question
             </button>
           </div>
           <div className="column">

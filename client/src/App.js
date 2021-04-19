@@ -1,33 +1,61 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Router } from "@reach/router";
 
-
-import "../src/css/style.css";
-
-// components
-import AskQuestion from './components/AskQuestion';
 import Questions from "./components/Questions";
 import Question from "./components/Question";
 
-function App() {
-  const [questions] = useState([
-    { id: 1, title: 'Pizza 1', description: "Pizza is nice 1" },
-    { id: 2, title: 'Pizza 2', description: "Pizza is nice 2" },
-    { id: 3, title: 'Pizza 3', description: "Pizza is nice 3" },
-  ]);
+const API_URL = process.env.REACT_APP_API;
 
+function App() {
+  const [questions, setQuestion] = useState([]);
+
+  useEffect(() => { 
+    const fetchData = async () => {
+      const url = `${API_URL}/question`;
+
+      const response = await fetch(url);
+      const data = await response.json();
+      setQuestion(data);
+    }; 
+    fetchData();
+  }, []); 
+  
   function getQuestion(id) {
     return questions.find(question => question.id === parseInt(id));
   }
+
+  function addQuestion(title, desc, tags) {
+    console.log(title, desc, tags);
+
+    const data = { 
+      title: title, 
+      desc: desc,
+      tags: tags 
+    };
+    const postData = async () => {
+      const url = `${API_URL}/question`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const reply = await response.json();
+      console.log(reply);
+
+    }; 
+    postData();
+  }
+
   return (
     <>
-    <div className="main container">
-      <Router>
-        <AskQuestion path="/ask-question"></AskQuestion>
-        <Questions path="/" data={questions}></Questions>
-        <Question path="/question/:id" getQuestion={getQuestion} ></Question>
-      </Router>
-    </div>
+      <div className="main container">
+        <Router>
+          <Questions path="/" data={questions} addQuestion={addQuestion}></Questions>
+          <Question path="/question/:id" getQuestion={getQuestion} ></Question>
+        </Router>
+      </div>
     </>
   );
 }

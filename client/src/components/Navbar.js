@@ -1,5 +1,4 @@
 import "../css/style.css";
-import { Link } from "@reach/router";
 
 function Navbar() {
 
@@ -27,9 +26,7 @@ function Navbar() {
               </form>
             </div>
             <div className="nav-buttons">
-              <button className="blue">
-                <Link to="/ask-question">Ask Question</Link>
-              </button>
+              <button className="blue" onClick={(event) => {document.getElementsByClassName('ask-question')[0].style.display="block"}}>Ask Question</button>
             </div>
           </div>
         </div>
