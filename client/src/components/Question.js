@@ -14,12 +14,13 @@ function Question(props) {
   useEffect(() => { 
     const fetchData = async () => {
       const url = `${API_URL}/answers`;
-      const scoreUrl = `${API_URL}/score`;
+      const scoreUrl = `${API_URL}/scores`;
 
       const response = await fetch(url);
       const scoreResponse = await fetch(scoreUrl);
       const data = await response.json();
       const scoreData = await scoreResponse.json();
+      console.log(scoreData);
       setAnwer(data);
       setScore(scoreData)
     }; 
@@ -32,7 +33,6 @@ function Question(props) {
       id: id,
       answer: answer
     };
-    console.log(answer);
 
     const postData = async () => {
   
@@ -50,16 +50,15 @@ function Question(props) {
     postData();
   }
 
-  function postScore(id, score) {
+  function addScore(id, score) {
     const data = { 
       id: id,
       score: score
     };
-    console.log(score);
 
     const postData = async () => {
   
-      const url = `${API_URL}/score`;
+      const url = `${API_URL}/scores`;
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -72,27 +71,26 @@ function Question(props) {
     }; 
     postData();
   }
+
   // filter scores with the same id as question
   let scoreValue = scores.filter(function( score ) {
     return score.id === question.id;
   });
 
   // sum of score
-  var ScoreVal = scoreValue.reduce((accum,item) => accum + item.score, 0);
-  console.log(ScoreVal);
-
+  var ScoreVal = scoreValue.reduce((accum,item) => accum + item.scorePoints, 0);
   
   function voteUp() {
     document.getElementsByClassName('up')[0].style.fill = "#f48024";
     document.getElementsByClassName('down')[0].style.fill = "#bbc0c4";
-    postScore(question.id, 1);
+    addScore(question.id, 1);
     window.location.reload();
   }
 
   function voteDown() {
     document.getElementsByClassName('up')[0].style.fill = "#bbc0c4";
     document.getElementsByClassName('down')[0].style.fill = "#f48024";
-    postScore(question.id, -1);
+    addScore(question.id, -1);
     window.location.reload();
   }
 

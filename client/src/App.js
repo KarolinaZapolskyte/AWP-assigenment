@@ -10,14 +10,13 @@ function App() {
   const [questions, setQuestion] = useState([]);
 
   useEffect(() => { 
-    const fetchData = async () => {
-      const url = `${API_URL}/question`;
-
+    async function getData() {
+      const url = `${API_URL}/questions`;
       const response = await fetch(url);
       const data = await response.json();
       setQuestion(data);
     }; 
-    fetchData();
+    getData();
   }, []); 
   
   function getQuestion(id) {
@@ -27,13 +26,19 @@ function App() {
   function addQuestion(title, desc, tags) {
     console.log(title, desc, tags);
 
+    let nextId = 2;
+
     const data = { 
+      id: nextId,
       title: title, 
       desc: desc,
       tags: tags 
     };
-    const postData = async () => {
-      const url = `${API_URL}/question`;
+
+    nextId++;
+    
+    async function postData() {
+      const url = `${API_URL}/questions`;
       const response = await fetch(url, {
         method: 'POST',
         headers: {

@@ -10,15 +10,14 @@ const mongoose = require('mongoose');
 
 /**** Configuration ****/
 const app = express(); 
-const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/awpAssignmentDB'; 
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/awpAssigmentDb'; 
 
 async function createServer() {
   // Connect db
   await mongoose.connect(MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 
   // Create data
-  const qaDB = require('./mogoose')(mongoose);
-  await qaDB.bootstrap();
+  const qaDB = require('./qaDB')(mongoose);
   
   // Require routes
   const routes = require("./routes")(qaDB); // Inject mongoose into routes module
