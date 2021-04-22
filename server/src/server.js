@@ -6,13 +6,24 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const cors = require('cors');
+const mongoose = require('mongoose');
 
 /**** Configuration ****/
 const app = express(); 
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/awpAssignmentDB'; 
 
-function createServer() {
-  const routes = require("./routes")();
+async function createServer() {
+  // Connect db
+  await mongoose.connect(MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 
+  // Create data
+  const qaDB = require('./mogoose')(mongoose);
+  await qaDB.bootstrap();
+  
+  // Require routes
+  const routes = require("./routes")(qaDB); // Inject mongoose into routes module
+
+    // Add middleware
   app.use(bodyParser.json()); 
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(morgan('combined')); 

@@ -397,6 +397,6 @@ header {
 footer {
     background-image: url('../images/footer.png');
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
     height: 323px;
 }

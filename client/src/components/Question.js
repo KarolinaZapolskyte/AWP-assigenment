@@ -1,50 +1,99 @@
 import { useState, useEffect } from 'react';
+import { Router } from "@reach/router";
+import Answers from './Answers'
 
 const API_URL = process.env.REACT_APP_API;
 
 function Question(props) {
   const { id, getQuestion } = props;
   const question = getQuestion(id);
-  
-  const [answers, setAnswers] = useState("");
 
+  const [answers, setAnwer] = useState([]);
+  const [scores, setScore] = useState([]);
+  
   useEffect(() => { 
     const fetchData = async () => {
-      const url = `${API_URL}/question`;
+      const url = `${API_URL}/answers`;
+      const scoreUrl = `${API_URL}/score`;
 
       const response = await fetch(url);
+      const scoreResponse = await fetch(scoreUrl);
       const data = await response.json();
-      setAnswers(data);
+      const scoreData = await scoreResponse.json();
+      setAnwer(data);
+      setScore(scoreData)
     }; 
     fetchData();
   }, []); 
 
-  const postData = async () => {
+
+  function addAnswer(id, answer) {
     const data = { 
-      answer: answers
+      id: id,
+      answer: answer
     };
+    console.log(answer);
 
-    const url = `${API_URL}/question`;
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-    const reply = await response.json();
-    console.log(reply);
+    const postData = async () => {
+  
+      const url = `${API_URL}/answers`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const reply = await response.json();
+      console.log(reply);
+    }; 
+    postData();
+  }
 
-  }; 
+  function postScore(id, score) {
+    const data = { 
+      id: id,
+      score: score
+    };
+    console.log(score);
+
+    const postData = async () => {
+  
+      const url = `${API_URL}/score`;
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      const reply = await response.json();
+      console.log(reply);
+    }; 
+    postData();
+  }
+  // filter scores with the same id as question
+  let scoreValue = scores.filter(function( score ) {
+    return score.id === question.id;
+  });
+
+  // sum of score
+  var ScoreVal = scoreValue.reduce((accum,item) => accum + item.score, 0);
+  console.log(ScoreVal);
+
   
   function voteUp() {
-    document.getElementsByClassName('up')[0].style.fill = "#f48024"
-    document.getElementsByClassName('down')[0].style.fill = "#bbc0c4"
+    document.getElementsByClassName('up')[0].style.fill = "#f48024";
+    document.getElementsByClassName('down')[0].style.fill = "#bbc0c4";
+    postScore(question.id, 1);
+    window.location.reload();
   }
 
   function voteDown() {
-    document.getElementsByClassName('up')[0].style.fill = "#bbc0c4"
-    document.getElementsByClassName('down')[0].style.fill = "#f48024"
+    document.getElementsByClassName('up')[0].style.fill = "#bbc0c4";
+    document.getElementsByClassName('down')[0].style.fill = "#f48024";
+    postScore(question.id, -1);
+    window.location.reload();
   }
 
   
@@ -59,14 +108,12 @@ function Question(props) {
             <div className="column voting">
               <svg aria-hidden="true" className="up" width="36" height="36" viewBox="0 0 36 36" onClick={(event) => {
                 voteUp()
-                question.score = question.score + 1
                 }}>
                 <path d="M2 26h32L18 10 2 26z"></path>
               </svg>
-              <p>{question.score}</p>
+              <p>{ScoreVal}</p>
               <svg aria-hidden="true" className="down" width="36" height="36" viewBox="0 0 36 36" onClick={(event) => {
                 voteDown()
-                question.score = question.score - 1
                 }}>
                 <path d="M2 10h32L18 26 2 10z"></path>
               </svg>
@@ -94,45 +141,12 @@ function Question(props) {
             <div className="question-block-image"></div>
           </div>
       </div>
-      {question.answers
-        ? question.answers.map(answer => {
-        return (
           <div className="answers">
-            <h2>Answers</h2>
-            <div className="row">
-              <div className="column">
-                <div className="answer">
-                  <div className="vote"></div>
-                </div>
-              </div>
-              <div className="column">
-                <div className="answer-image"></div>
-              </div>
-            </div>
+        <Router>
+          <Answers path='/' data={answers} addAnswer={addAnswer} getQuestion={getQuestion} />
+        </Router>
           </div>
-        );
-      })
-    : null}
-      <div className="post-answer">
-      <h2>Your answer</h2>
-        <div className="row">
-            <div className="column">
-                <div className="answer-box">
-                    <textarea onChange={(event) => setAnswers(event.target.value)} type="text" />
-                </div>
-                <div className="tips-image"></div>
-                <br />
-                <button type="button" className="blue" onClick={(event) => {
-                  postData()
-                    // window.location.reload()
-                    }}>Post Your Answer
-                </button>
-            </div>
-            <div className="column">
-                <div className="post-answer-image"></div>
-            </div>
-        </div>
-      </div>
+       
       </>
     );
   }
