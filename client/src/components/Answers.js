@@ -9,21 +9,22 @@ function Answers(props) {
         return ans.id === question.id;
     });
 
+    const answerAmount = answer.length;
+
   return (
     <>
       
-      <h1>All answers</h1>
+      <h2>{answerAmount} answers</h2>
           <div className="row">
           <div className="column">
-            <div className="answer">
-              <div className="vote"></div>
         {
           answer.map( answer =>  
+            <div className="answer" key={answer._id}>
             <p>{answer.answerText}</p>
+            </div>
             )
         }
-            </div>
-          </div>
+        </div>
           <div className="column">
             <div className="answer-image"></div>
           </div>

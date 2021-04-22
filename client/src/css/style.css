@@ -315,7 +315,7 @@ header {
     display: grid;
     grid-template-columns: -webkit-max-content 1fr;
     grid-template-columns: max-content 1fr;
-    padding-bottom: 16px;
+    padding: 16px;
     border-bottom: 1px solid #e4e6e8;
 }
 
@@ -352,6 +352,7 @@ header {
 .answer-image {
     background-image: url('../images/companies.png');
     background-repeat: no-repeat;
+    background-position: top;
     height: 100%;
 }
 
@@ -364,6 +365,7 @@ header {
 .post-answer-image {
     background-image: url('../images/job.png');
     background-repeat: no-repeat;
+    background-position: top;
     height: 100%;
 }
 
@@ -399,4 +401,5 @@ footer {
     background-repeat: no-repeat;
     background-size: cover;
     height: 323px;
+    margin-top: 105px;
 }

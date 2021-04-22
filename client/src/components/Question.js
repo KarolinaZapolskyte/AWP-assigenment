@@ -20,7 +20,6 @@ function Question(props) {
       const scoreResponse = await fetch(scoreUrl);
       const data = await response.json();
       const scoreData = await scoreResponse.json();
-      console.log(scoreData);
       setAnwer(data);
       setScore(scoreData)
     }; 
@@ -125,7 +124,7 @@ function Question(props) {
           <div className="tags">
             <p>Tags:</p>
             <ul>
-              <li>{tag}</li>
+              <li key={tag._id}>{tag}</li>
             </ul>
           </div>
         );

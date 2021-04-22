@@ -8,7 +8,6 @@ function PostAnswer(props) {
   // Conditional rendering
   return (
     <>
-      <div className="post-answer">
       <h2>Your answer</h2>
         <div className="row">
             <div className="column">
@@ -26,7 +25,6 @@ function PostAnswer(props) {
             <div className="column">
                 <div className="post-answer-image"></div>
             </div>
-        </div>
         </div>
     </>
   );

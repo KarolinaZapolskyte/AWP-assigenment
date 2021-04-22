@@ -13,7 +13,7 @@ function Questions(props) {
       <h1>All questions</h1>
       <div>
         {
-          data.map( question => <div className="question-summary">
+          data.map( question => <div className="question-summary" key={question._id}>
             <Link to={`/question/${question.id}`}>{question.title}</Link>
           </div> )
         }
