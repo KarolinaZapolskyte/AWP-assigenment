@@ -14,7 +14,20 @@ const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/awpAssigmentDb';
 
 async function createServer() {
   // Connect db
-  await mongoose.connect(MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true});
+  const url = `mongodb+srv://DbUser:passwordUser@cluster0.3ii69.mongodb.net/awpAssigmentDb?retryWrites=true&w=majority`;
+
+const connectionParams={
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true 
+}
+mongoose.connect(url,connectionParams)
+    .then( () => {
+        console.log('Connected to database ')
+    })
+    .catch( (err) => {
+        console.error(`Error connecting to the database. \n${err}`);
+    })
 
   // Create data
   const qaDB = require('./qaDB')(mongoose);
