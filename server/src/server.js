@@ -14,7 +14,7 @@ const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/awpAssigmentDb';
 
 async function createServer() {
   // Connect db
-  await mongoose.connect(MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true}).catch(console.error);
+  await mongoose.connect(MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 
   // Create data
   const qaDB = require('./qaDB')(mongoose);
