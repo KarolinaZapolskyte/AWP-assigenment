@@ -14,7 +14,7 @@ const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/awpAssigmentDb';
 
 async function createServer() {
   // Connect db
-  const url = `mongodb+srv://DbUser:passwordUser@cluster0.3ii69.mongodb.net/awpAssigmentDb?retryWrites=true&w=majority`;
+  const url = `mongodb+srv://karolinaZ:mazaika2000@awscluster.lkvcfok.mongodb.net/awpAssigmentDb?retryWrites=true&w=majority`;
 
 const connectionParams={
     useNewUrlParser: true,
