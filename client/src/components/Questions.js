@@ -3,6 +3,7 @@ import AskQuestion from "./AskQuestion";
 
 function Questions(props) {
   const { data, addQuestion } = props;
+  console.log(data)
 
   return (
     <>

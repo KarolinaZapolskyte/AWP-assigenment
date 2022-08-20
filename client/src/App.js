@@ -14,6 +14,7 @@ function App() {
       const url = `${API_URL}/questions`;
       const response = await fetch(url);
       const data = await response.json();
+      console.log(url)
       setQuestion(data);
     }; 
     getData();
