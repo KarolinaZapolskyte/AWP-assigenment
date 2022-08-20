@@ -14,7 +14,6 @@ function App() {
       const url = `${API_URL}/questions`;
       const response = await fetch(url);
       const data = await response.json();
-      console.log(url)
       setQuestion(data);
     }; 
     getData();
@@ -25,8 +24,6 @@ function App() {
   }
 
   function addQuestion(title, desc, tags) {
-    console.log(title, desc, tags);
-
     let nextId = 2;
 
     const data = { 
